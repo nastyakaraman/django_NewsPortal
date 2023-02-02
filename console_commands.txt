@@ -1,0 +1,86 @@
+from django.contrib.auth.models import User
+from news.models import *
+
+a1=User.objects.create_user('author01'))
+a2=User.objects.create_user('author02'))
+
+a01=Author.objects.create(authorUser=a1)
+a02=Author.objects.create(authorUser=a2)
+
+Category.objects.create(name='Политика')
+Category.objects.create(name='Cпорт')
+Category.objects.create(name='Культура')
+Category.objects.create(name='Экономика')
+Category.objects.create(name='Россия')
+Category.objects.create(name='Мир')
+
+Post.objects.create(author=ao1, type='N', heading='Руперт Гринт оценил вероятность участия в сериале о Гарри Поттере')
+post1=Post.objects.all()[0]
+post1.category.add(Category.objects.get(id=3))
+post1.category.add(Category.objects.get(id=6))
+
+post2=Post.objects.create(author=ao1, type='A',heading='Сериал о российском киберспорте "Мишки на сервере"')
+post2.category.add(Category.objects.get(id=3))
+post2.category.add(Category.objects.get(id=6))
+
+post3=Post.objects.create(author=ao2, type='A',heading='Каким Египет был почти 200 лет назад: выставка в Музее Востока')
+post3.category.add(Category.objects.get(id=3))
+post3.category.add(Category.objects.get(id=6))
+
+Comment.objects.create(comPost=post3, comUser=a1)
+Comment.objects.create(comPost=post3, comUser=a1)
+Comment.objects.create(comPost=post2, comUser=a2)
+Comment.objects.create(comPost=post2, comUser=a2)
+Comment.objects.create(comPost=post1, comUser=a2)
+
+Comment.objects.get(id=1).like()
+Comment.objects.get(id=1).like()
+Comment.objects.get(id=1).like()
+Comment.objects.get(id=2).dislike()
+Comment.objects.get(id=2).dislike()
+Comment.objects.get(id=3).like()
+Comment.objects.get(id=3).dislike()
+Comment.objects.get(id=3).dislike()
+Comment.objects.get(id=4).like()
+Comment.objects.get(id=4).like()
+Comment.objects.get(id=4).dislike()
+Comment.objects.get(id=4).like()
+Comment.objects.get(id=5).like()
+Comment.objects.get(id=5).like()
+Comment.objects.get(id=5).like()
+Comment.objects.get(id=5).like()
+Comment.objects.get(id=5).dislike()
+Comment.objects.get(id=5).dislike()
+
+Post.objects.get(id=1).like()
+Post.objects.get(id=1).like()
+Post.objects.get(id=1).like()
+Post.objects.get(id=2).dislike()
+Post.objects.get(id=2).dislike()
+Post.objects.get(id=3).like()
+Post.objects.get(id=3).dislike()
+Post.objects.get(id=3).dislike()
+Post.objects.get(id=2).like()
+Post.objects.get(id=2).like()
+Post.objects.get(id=1).dislike()
+Post.objects.get(id=3).like()
+Post.objects.get(id=1).like()
+Post.objects.get(id=3).like()
+Post.objects.get(id=2).like()
+Post.objects.get(id=1).like()
+Post.objects.get(id=3).dislike()
+Post.objects.get(id=1).dislike()
+
+ao1.update_rating()
+ao2.update_rating()
+
+Author.objects.all().order_by('-arating')[0].authorUser #лучший автор
+
+Best_article=Post.objects.all().order_by('-rate')[0]
+Best_article.heading #лучшая статья
+Best_article.author #автор статьи
+Best_article.time_in #дата создания
+Best_article.preview()
+
+Comment.objects.get(comPost=Best_article).text #комментарии к лучшей статье
+
